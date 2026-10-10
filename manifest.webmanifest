@@ -1,0 +1,16 @@
+{
+  "name": "SJ Vault",
+  "short_name": "SJ Vault",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#22130B",
+  "theme_color": "#22130B",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
