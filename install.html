@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ติดตั้งแอป SJ Vault</title>
+<meta name="theme-color" content="#22130B">
+<meta name="apple-mobile-web-app-title" content="SJ Vault">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+  :root{--bg:#22130B;--card:#2E1B11;--line:#5B3B28;--gold:#E7AE6E;--cream:#F3E6D6;--muted:#CDB59D;--ok:#7FCF9A;--bad:#FFB4A2}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--cream);font-family:system-ui,-apple-system,"Sarabun",sans-serif;font-size:17px;line-height:1.5}
+  body{min-height:100vh}
+  main{max-width:520px;margin:0 auto;padding:24px 16px 40px}
+  .head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;margin-bottom:18px}
+  .head img{width:96px;height:96px;border-radius:22px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  h1{margin:0;font-size:24px;color:var(--gold);letter-spacing:.3px}
+  .sub{color:var(--muted);font-size:15px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px}
+  .hidden{display:none!important}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;border-radius:14px;border:0;background:#B87333;color:#fff;font-size:18px;font-weight:700;text-decoration:none;box-shadow:inset 0 -3px 0 #8A5222;cursor:pointer;font-family:inherit}
+  .btn:disabled{opacity:.55;cursor:default}
+  .btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--gold);box-shadow:none;font-size:16px;min-height:48px}
+  ol{margin:12px 0 0;padding:0;list-style:none;counter-reset:s}
+  ol li{counter-increment:s;position:relative;padding:8px 0 8px 42px;border-top:1px solid #3d2617}
+  ol li:first-child{border-top:0}
+  ol li::before{content:counter(s);position:absolute;left:0;top:8px;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--bg);font-weight:800;display:flex;align-items:center;justify-content:center}
+  b{color:var(--gold)}
+  .warn{background:#3A1E14;border-color:#8a4a32}
+  .warn h2{color:var(--bad)}
+  h2{font-size:19px;margin:0 0 4px}
+  .qr{background:#fff;border-radius:14px;padding:10px;width:220px;margin:12px auto 0}
+  .qr img{width:100%;display:block}
+  .done{color:var(--ok);font-weight:700;text-align:center}
+  .foot{margin-top:22px;text-align:center}
+  .foot a{color:var(--gold)}
+  code{background:#1a0e08;padding:2px 6px;border-radius:6px;font-size:14px;word-break:break-all}
+</style>
+</head>
+<body>
+<main>
+  <div class="head">
+    <img src="icon.png" alt="">
+    <h1>ติดตั้งแอป SJ Vault</h1>
+    <div class="sub">ทำครั้งเดียวต่อเครื่อง · ได้ไอคอน SJ เปิดเต็มจอ</div>
+  </div>
+
+  <!-- iPhone ใน Safari -->
+  <section id="ios" class="hidden">
+    <div class="card">
+      <h2>📱 iPhone / iPad</h2>
+      <a class="btn" href="SJVault.mobileconfig" id="dl">⬇️ ดาวน์โหลดไอคอนแอป</a>
+      <ol>
+        <li>กดปุ่มด้านบน → กด <b>“อนุญาต”</b> → <b>“ปิด”</b></li>
+        <li>เปิดแอป <b>การตั้งค่า</b> → แตะ <b>“ดาวน์โหลดโปรไฟล์แล้ว”</b> (บนสุด)<br><span class="sub">ไม่เห็น → ทั่วไป → VPN และการจัดการอุปกรณ์</span></li>
+        <li>กด <b>ติดตั้ง</b> → ใส่รหัสเครื่อง → <b>ติดตั้ง</b> → <b>เสร็จสิ้น</b></li>
+        <li>กลับหน้าจอโฮม → แตะไอคอน <b>SJ Vault</b> → ใส่ PIN</li>
+      </ol>
+      <p class="sub" style="margin:10px 0 0">ขึ้นคำว่า “ไม่ได้ยืนยัน” ได้ตามปกติ (ไฟล์ของร้านเอง ไม่ได้ขอรับรองกับ Apple) · ไฟล์นี้แค่เพิ่มไอคอน ไม่เปลี่ยนการตั้งค่าอื่น · ลบได้ทุกเมื่อ</p>
+    </div>
+  </section>
+
+  <!-- iPhone แต่ไม่ใช่ Safari -->
+  <section id="ios-other" class="hidden">
+    <div class="card warn">
+      <h2>⚠️ ต้องเปิดด้วย Safari</h2>
+      <p style="margin:6px 0 12px">หน้านี้เปิดจาก LINE / Facebook / Chrome ติดตั้งไม่ได้</p>
+      <button class="btn" id="copy1">📋 คัดลอกลิงก์</button>
+      <ol><li>กดคัดลอกลิงก์</li><li>เปิด <b>Safari</b> → แตะช่องที่อยู่ → วาง → ไป</li></ol>
+    </div>
+  </section>
+
+  <!-- Android -->
+  <section id="android" class="hidden">
+    <div class="card">
+      <h2>🤖 Android</h2>
+      <button class="btn" id="install" disabled>⏳ กำลังเตรียม…</button>
+      <div id="installed" class="done hidden" style="margin-top:12px">✓ ติดตั้งแล้ว — ดูไอคอน SJ Vault ที่หน้าจอ</div>
+      <div id="manual" class="hidden">
+        <p style="margin:12px 0 0">ถ้าปุ่มไม่ทำงาน ทำเอง:</p>
+        <ol>
+          <li>แตะ <b>⋮</b> (มุมขวาบนของ Chrome)</li>
+          <li>เลือก <b>“ติดตั้งแอป”</b> หรือ <b>“เพิ่มลงในหน้าจอหลัก”</b></li>
+          <li>กด <b>ติดตั้ง / เพิ่ม</b> → ไอคอน SJ Vault ขึ้นที่หน้าจอ</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Android แต่เปิดใน LINE / Facebook -->
+  <section id="android-other" class="hidden">
+    <div class="card warn">
+      <h2>⚠️ ต้องเปิดด้วย Chrome</h2>
+      <p style="margin:6px 0 12px">หน้านี้เปิดจาก LINE / Facebook ติดตั้งไม่ได้</p>
+      <a class="btn" id="toChrome" href="#">เปิดใน Chrome</a>
+      <button class="btn ghost" id="copy2" style="margin-top:10px">📋 คัดลอกลิงก์ (ไปวางใน Chrome เอง)</button>
+    </div>
+  </section>
+
+  <!-- คอมพิวเตอร์ -->
+  <section id="desktop" class="hidden">
+    <div class="card" style="text-align:center">
+      <h2>สแกนด้วยมือถือ</h2>
+      <div class="sub">iPhone ใช้กล้อง → เปิดใน Safari · Android ใช้กล้อง/Google Lens → เปิดใน Chrome</div>
+      <div class="qr"><img src="qr_install.png" alt="QR ติดตั้งแอป"></div>
+      <p class="sub" style="margin:10px 0 0"><code>sjvault.github.io/install.html</code></p>
+    </div>
+  </section>
+
+  <div class="foot"><a href="./">เปิดระบบร้านเลย (ไม่ติดตั้ง) ›</a></div>
+</main>
+<script>
+(function () {
+  const ua = navigator.userAgent || '';
+  const iOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const android = /Android/i.test(ua);
+  const inApp = /Line\/|FBAN|FBAV|FB_IAB|Instagram|MicroMessenger|; wv\)/i.test(ua);
+  const iosNotSafari = iOS && (inApp || /CriOS|FxiOS|EdgiOS|OPiOS|GSA\//i.test(ua));
+  const show = id => document.getElementById(id).classList.remove('hidden');
+  const link = 'https://sjvault.github.io/install.html';
+  const copy = async btn => {
+    try { await navigator.clipboard.writeText(link); btn.textContent = '✓ คัดลอกแล้ว'; }
+    catch (e) { prompt('คัดลอกลิงก์นี้', link); }
+  };
+  if (iOS) { show(iosNotSafari ? 'ios-other' : 'ios'); }
+  else if (android) { show(inApp ? 'android-other' : 'android'); }
+  else show('desktop');
+  document.getElementById('copy1').onclick = e => copy(e.target);
+  document.getElementById('copy2').onclick = e => copy(e.target);
+  document.getElementById('toChrome').href = 'intent://sjvault.github.io/install.html#Intent;scheme=https;package=com.android.chrome;end';
+
+  // Android: ปุ่มติดตั้ง (Chrome)
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  const btn = document.getElementById('install'); let deferred = null;
+  const standalone = matchMedia('(display-mode: standalone)').matches;
+  if (standalone) { btn.classList.add('hidden'); show('installed'); }
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault(); deferred = e;
+    btn.disabled = false; btn.textContent = '📲 ติดตั้งแอป SJ Vault';
+  });
+  btn.addEventListener('click', async () => {
+    if (!deferred) return;
+    deferred.prompt(); const r = await deferred.userChoice; deferred = null;
+    if (r && r.outcome === 'accepted') { btn.classList.add('hidden'); show('installed'); }
+    else { btn.disabled = true; btn.textContent = 'ยกเลิกแล้ว — ทำเองตามขั้นตอนด้านล่าง'; show('manual'); }
+  });
+  window.addEventListener('appinstalled', () => { btn.classList.add('hidden'); show('installed'); });
+  setTimeout(() => { if (!deferred && !standalone) { btn.disabled = true; btn.textContent = 'ติดตั้งด้วยเมนู Chrome ⬇️'; show('manual'); } }, 3500);
+})();
+</script>
+</body>
+</html>

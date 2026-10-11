@@ -1,16 +1,17 @@
 {
+  "id": "./",
   "name": "SJ Vault",
   "short_name": "SJ Vault",
-  "start_url": "./",
-  "display": "browser",
+  "description": "ระบบร้าน SJ Vault & Accessories",
+  "start_url": "./?app=1",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#22130B",
   "theme_color": "#22130B",
+  "lang": "th",
   "icons": [
-    {
-      "src": "icon.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
   ]
 }

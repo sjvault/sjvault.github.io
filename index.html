@@ -2,18 +2,20 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SJ Vault</title>
 <meta name="theme-color" content="#22130B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SJ Vault">
-<link rel="apple-touch-icon" href="icon.png">
-<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <style>
-  html,body{margin:0;height:100%;background:#22130B;color:#E7AE6E;font-family:system-ui,sans-serif}
-  .c{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:16px}
-  img{width:120px;height:120px;border-radius:24px}
-  a{color:#E7AE6E;font-size:18px}
+  html,body{margin:0;height:100%;background:#22130B;color:#E7AE6E;font-family:system-ui,-apple-system,"Sarabun",sans-serif}
+  .c{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:16px;box-sizing:border-box}
+  img{width:112px;height:112px;border-radius:24px}
+  a{color:#E7AE6E;font-size:17px}
 </style>
 </head>
 <body>
@@ -21,21 +23,18 @@
   <img src="icon.png" alt="SJ Vault">
   <div id="msg">กำลังเปิดระบบร้าน…</div>
   <a id="go" href="#">แตะที่นี่ ถ้าไม่เปิดเอง</a>
+  <a href="install.html" style="font-size:15px;opacity:.8">📲 ติดตั้งไอคอนแอปในมือถือ</a>
 </div>
 <script>
-  // ▼▼ วางลิงก์เว็บแอป (ที่ลงท้ายด้วย /exec) ระหว่างเครื่องหมาย ' ' ▼▼
-  const WEBAPP_URL = 'วางลิงก์เว็บแอปตรงนี้';
+  // ▼▼ ลิงก์เว็บแอป (ลงท้ายด้วย /exec) ▼▼
+  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx7uJ9h1Y8Nr6U0-GAsZrb07QDnyDczwslillm92bGjUXtvytM-Z56s5BJG55__2P2Asw/exec';
   document.getElementById('go').href = WEBAPP_URL;
-  const ok = /^https:\/\/script\.google\.com\/.+\/exec/.test(WEBAPP_URL);
-  if (location.hash === '#add') {
-    // โหมดติดตั้ง: ไม่เปิดต่อ ให้กด "เพิ่มไปยังหน้าจอโฮม" (ลบ #add ออกจากลิงก์ก่อน ไอคอนจะได้เปิดระบบตรงๆ)
-    history.replaceState(null, '', location.pathname);
-    document.getElementById('msg').innerHTML = 'iPhone: กด <b>แชร์</b> → <b>เพิ่มไปยังหน้าจอโฮม</b><br>Android: กด <b>⋮</b> → <b>เพิ่มไปยังหน้าจอหลัก</b>';
-  } else if (ok) {
-    setTimeout(() => location.replace(WEBAPP_URL), 600);
-  } else {
-    document.getElementById('msg').textContent = 'ยังไม่ได้ใส่ลิงก์เว็บแอปในไฟล์ index.html';
-  }
+  if (location.hash === '#add') { location.replace('install.html'); }
+  else if (/^https:\/\/script\.google\.com\/.+\/exec/.test(WEBAPP_URL)) {
+    const app = /[?&]app=1/.test(location.search) || matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+    setTimeout(() => location.replace(WEBAPP_URL), app ? 0 : 500);
+  } else document.getElementById('msg').textContent = 'ยังไม่ได้ใส่ลิงก์เว็บแอปในไฟล์ index.html';
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
 </body>
 </html>
