@@ -12,34 +12,27 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <style>
-  html,body{margin:0;height:100%;background:#22130B;color:#E7AE6E;font-family:system-ui,-apple-system,"Sarabun",sans-serif;overflow:hidden}
-  #app{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#22130B}
-  .c{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:16px;box-sizing:border-box;transition:opacity .3s}
-  .c.hide{opacity:0;pointer-events:none}
+  html,body{margin:0;height:100%;background:#22130B;color:#E7AE6E;font-family:system-ui,-apple-system,"Sarabun",sans-serif}
+  .c{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:16px;box-sizing:border-box}
   img{width:112px;height:112px;border-radius:24px}
-  a{color:#E7AE6E;font-size:15px}
+  a{color:#E7AE6E;font-size:17px}
 </style>
 </head>
 <body>
-<iframe id="app" title="SJ Vault" allow="clipboard-read; clipboard-write" referrerpolicy="no-referrer-when-downgrade"></iframe>
-<div class="c" id="cover">
+<div class="c">
   <img src="icon.png" alt="SJ Vault">
   <div id="msg">กำลังเปิดระบบร้าน…</div>
-  <a id="go" href="#" style="opacity:.8">เปิดไม่ขึ้น? แตะที่นี่ (เปิดแบบหน้าเต็ม)</a>
-  <a href="install.html" style="opacity:.7">📲 ติดตั้งไอคอนแอปในมือถือ</a>
+  <a id="go" href="#">แตะที่นี่ ถ้าไม่เปิดเอง</a>
+  <a href="install.html" style="font-size:15px;opacity:.8">📲 ติดตั้งไอคอนแอปในมือถือ</a>
 </div>
 <script>
-  // ▼▼ ลิงก์เว็บแอป (ลงท้ายด้วย /exec) ▼▼  — เปลี่ยนเฉพาะบรรทัดนี้เมื่อ Deploy ใหม่แล้วลิงก์เปลี่ยน
+  // ▼▼ ลิงก์เว็บแอป (ลงท้ายด้วย /exec) ▼▼
   const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx7uJ9h1Y8Nr6U0-GAsZrb07QDnyDczwslillm92bGjUXtvytM-Z56s5BJG55__2P2Asw/exec';
-  // ฝังแอปเต็มจอ (ไม่มีแถบสีฟ้าของ Google ด้านบน) · ถ้าฝังไม่ได้ ยังกดลิงก์ "เปิดแบบหน้าเต็ม" ได้
   document.getElementById('go').href = WEBAPP_URL;
   if (location.hash === '#add') { location.replace('install.html'); }
   else if (/^https:\/\/script\.google\.com\/.+\/exec/.test(WEBAPP_URL)) {
-    // ฝังแอป แล้วรอแอปส่งสัญญาณ "เปิดขึ้นแล้ว" · ไม่ได้รับภายใน 8 วินาที → เปิดแบบหน้าเต็ม (แบบเดิม) อัตโนมัติ จะไม่ค้างจอขาว
-    const f = document.getElementById('app'); let ok = false;
-    addEventListener('message', e => { if (e.data === 'sjv-ok' && !ok) { ok = true; document.getElementById('cover').classList.add('hide'); } });
-    f.src = WEBAPP_URL;
-    setTimeout(() => { if (!ok) location.replace(WEBAPP_URL); }, 8000);
+    const app = /[?&]app=1/.test(location.search) || matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+    setTimeout(() => location.replace(WEBAPP_URL), app ? 0 : 500);
   } else document.getElementById('msg').textContent = 'ยังไม่ได้ใส่ลิงก์เว็บแอปในไฟล์ index.html';
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
