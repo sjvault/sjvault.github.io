@@ -35,10 +35,11 @@
   document.getElementById('go').href = WEBAPP_URL;
   if (location.hash === '#add') { location.replace('install.html'); }
   else if (/^https:\/\/script\.google\.com\/.+\/exec/.test(WEBAPP_URL)) {
-    const f = document.getElementById('app');
-    f.addEventListener('load', () => setTimeout(() => document.getElementById('cover').classList.add('hide'), 300));
+    // ฝังแอป แล้วรอแอปส่งสัญญาณ "เปิดขึ้นแล้ว" · ไม่ได้รับภายใน 8 วินาที → เปิดแบบหน้าเต็ม (แบบเดิม) อัตโนมัติ จะไม่ค้างจอขาว
+    const f = document.getElementById('app'); let ok = false;
+    addEventListener('message', e => { if (e.data === 'sjv-ok' && !ok) { ok = true; document.getElementById('cover').classList.add('hide'); } });
     f.src = WEBAPP_URL;
-    setTimeout(() => { document.getElementById('msg').textContent = 'ใช้เวลานานกว่าปกติ… ถ้าไม่ขึ้น แตะลิงก์ด้านล่าง'; }, 12000);
+    setTimeout(() => { if (!ok) location.replace(WEBAPP_URL); }, 8000);
   } else document.getElementById('msg').textContent = 'ยังไม่ได้ใส่ลิงก์เว็บแอปในไฟล์ index.html';
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
